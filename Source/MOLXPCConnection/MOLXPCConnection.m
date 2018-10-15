@@ -155,7 +155,8 @@
   // configured to only allow root/admins
   NSXPCInterface *interface;
   if (connection.effectiveUserIdentifier == 0) {
-    interface = self.privilegedInterface;
+    // Allow processes running as root to access privileged or unprivileged interfaces.
+    interface = self.privilegedInterface ?: self.unprivilegedInterface;
   } else {
     interface = self.unprivilegedInterface;
   }
